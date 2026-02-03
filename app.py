@@ -213,33 +213,6 @@ def step1_property_input():
             st.session_state.step = 2
             st.rerun()
 
-    with col2:
-        # Show map if we have coordinates
-        if st.session_state.geocoding_result:
-            geo = st.session_state.geocoding_result
-            st.markdown(f"**Found:** {geo.formatted_address}")
-
-            # Create a simple map using plotly
-            fig = go.Figure(go.Scattermapbox(
-                lat=[geo.latitude],
-                lon=[geo.longitude],
-                mode='markers',
-                marker=dict(size=14, color='red'),
-                text=[geo.formatted_address]
-            ))
-
-            fig.update_layout(
-                mapbox=dict(
-                    style="open-street-map",
-                    center=dict(lat=geo.latitude, lon=geo.longitude),
-                    zoom=17
-                ),
-                margin=dict(l=0, r=0, t=0, b=0),
-                height=300
-            )
-
-            st.plotly_chart(fig, use_container_width=True)
-
 
 def step2_solar_attributes():
     """Step 2: Display and edit solar attributes."""
@@ -254,6 +227,32 @@ def step2_solar_attributes():
 
     geo = st.session_state.geocoding_result
     solar = st.session_state.solar_insights
+
+    # Show address and map
+    st.markdown(f"**Property:** {geo.formatted_address}")
+
+    # Create a map using plotly
+    fig = go.Figure(go.Scattermapbox(
+        lat=[geo.latitude],
+        lon=[geo.longitude],
+        mode='markers',
+        marker=dict(size=14, color='red'),
+        text=[geo.formatted_address]
+    ))
+
+    fig.update_layout(
+        mapbox=dict(
+            style="open-street-map",
+            center=dict(lat=geo.latitude, lon=geo.longitude),
+            zoom=17
+        ),
+        margin=dict(l=0, r=0, t=0, b=0),
+        height=250
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.divider()
 
     col1, col2 = st.columns(2)
 
