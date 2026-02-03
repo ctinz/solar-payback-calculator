@@ -860,7 +860,7 @@ def main():
 
         st.markdown("### Model Info")
         metrics = model_package.get('metrics', {})
-        st.markdown(f"- **Test R²:** {metrics.get('test_r2', 0):.3f}")
+        st.markdown("Ridge Regression Model")
         st.markdown(f"- **Test MAE:** {metrics.get('test_mae', 0):,.0f} kWh")
 
         st.divider()
